@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سُتره - تطبيق الزواج السوداني</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        .card-bg {
+            background: linear-gradient(145deg, #2a2a3e 0%, #1e1e2e 100%);
+        }
+        
+        .primary-btn {
+            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .primary-btn:hover {
+            background: linear-gradient(135deg, #A52A2A 0%, #CD5C5C 100%);
+            transform: translateY(-2px);
+        }
+        
+        .profile-card {
+            background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+        }
+        
+        .active-tab {
+            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
+            color: white;
+        }
+        
+        .message-bubble {
+            background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+        }
+        
+        .match-card {
+            background: linear-gradient(145deg, #f1f3f4 0%, #e8eaed 100%);
+        }
+        
+        .status-online {
+            background: #28a745;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); } /* corrected to return to original position */
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-gray-800">
+    
+    <nav class="card-bg shadow-xl p-4 mb-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <i class="fas fa-heart text-red-800 text-2xl"></i>
+                <h1 class="text-2xl font-bold text-gray-200">سُتره</h1>
+            </div>
+            <div class="flex space-x-4 space-x-reverse">
+                <a href="pricing.html" class="text-gray-300 hover:text-red-800 transition-colors">
+                    <i class="fas fa-dollar-sign text-xl"></i>
+                </a>
+                <a href="contact.html" class="text-gray-300 hover:text-red-800 transition-colors">
+                    <i class="fas fa-headset text-xl"></i>
+                </a>
+                <button class="text-gray-300 hover:text-red-800 transition-colors">
+                    <i class="fas fa-bell text-xl"></i>
+                </button>
+                <button class="text-gray-300 hover:text-red-800 transition-colors">
+                    <i class="fas fa-user-circle text-xl"></i>
+                </button>
+                <button onclick="window.location.href='landing.html'" class="text-gray-300 hover:text-red-800 transition-colors">
+                    <i class="fas fa-sign-out-alt text-xl ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4">
+        
+        <div class="flex justify-center mb-8">
+            <div class="card-bg rounded-full p-2 flex space-x-2 space-x-reverse">
+                <button onclick="showTab('discover')" id="discover-tab" class="active-tab px-6 py-3 rounded-full font-semibold transition-all">
+                    <i class="fas fa-search ml-2"></i>
+                    اكتشاف
+                </button>
+                <button onclick="showTab('matches')" id="matches-tab" class="px-6 py-3 rounded-full font-semibold text-gray-300 hover:text-red-800 transition-all">
+                    <i class="fas fa-heart ml-2"></i>
+                    التوافقات
+                </button>
+                <button onclick="showTab('messages')" id="messages-tab" class="px-6 py-3 rounded-full font-semibold text-gray-300 hover:text-red-800 transition-all">
+                    <i class="fas fa-comments ml-2"></i>
+                    الرسائل
+                </button>
+                <button onclick="showTab('profile')" id="profile-tab" class="px-6 py-3 rounded-full font-semibold text-gray-300 hover:text-red-800 transition-all">
+                    <i class="fas fa-user ml-2"></i>
+                    الملف الشخصي
+                </button>
+            </div>
+        </div>
+
+        <div id="discover" class="tab-content">
+            <div class="max-w-md mx-auto">
+                <div class="card-bg rounded-xl p-6 mb-6 shadow-xl">
+                    <h3 class="text-xl font-bold text-gray-200 mb-4 flex items-center">
+                        <i class="fas fa-filter ml-2 text-red-800"></i>
+                        خيارات البحث
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">العمر</label>
+                            <select class="w-full p-3 rounded-lg border border-gray-600 bg-gray-700 text-gray-200">
+                                <option>18-25</option>
+                                <option>26-35</option>
+                                <option>36-45</option>
+                                <option>45+</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">المدينة</label>
+                            <select class="w-full p-3 rounded-lg border border-gray-600 bg-gray-700 text-gray-200">
+                                <option>الخرطوم</option>
+                                <option>شمال السودان</option>
+                                <option>شرق السودان</option>
+                                <option>غرب السودان</option>
+                                <option>جنوب السودان</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="profile-card rounded-xl shadow-xl overflow-hidden relative">
+                        <div class="floating-hearts top-4 right-4">
+                            <i class="fas fa-heart text-red-800"></i>
+                        </div>
+                        <div class="h-64 bg-gradient-to-br from-purple-400 to-pink-400 relative">
+                            <div class="absolute bottom-4 right-4 bg-green-500 w-4 h-4 rounded-full status-online"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-xl font-bold">فاطمة أحمد</h3>
+                                <p class="text-sm opacity-90">25 سنة - الخرطوم</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-graduation-cap text-red-800 ml-2"></i>
+                                <span>بكالوريوس هندسة</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-briefcase text-red-800 ml-2"></i>
+                                <span>مهندسة مدني</span>
+                            </div>
+                            <p class="text-gray-600 mb-6">أبحث عن شريك حياة متدين وملتزم لبناء أسرة سعيدة بإذن الله</p>
+                            <div class="flex space-x-4 space-x-reverse">
+                                <button class="flex-1 primary-btn text-white py-3 rounded-xl font-semibold">
+                                    <i class="fas fa-heart ml-2"></i>
+                                    إعجاب
+                                </button>
+                                <button class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-400 transition-colors">
+                                    <i class="fas fa-times ml-2"></i>
+                                    تمرير
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-card rounded-xl shadow-xl overflow-hidden relative">
+                        <div class="h-64 bg-gradient-to-br from-blue-400 to-indigo-400 relative">
+                            <div class="absolute bottom-4 right-4 bg-gray-400 w-4 h-4 rounded-full"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h3 class="text-xl font-bold">محمد عبدالله</h3>
+                                <p class="text-sm opacity-90">28 سنة - أم درمان</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-graduation-cap text-red-800 ml-2"></i>
+                                <span>ماجستير إدارة أعمال</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-briefcase text-red-800 ml-2"></i>
+                                <span>مدير تسويق</span>
+                            </div>
+                            <p class="text-gray-600 mb-6">شخص جاد ومتدين أسعى لإيجاد شريكة حياة تشاركني أهدافي وتطلعاتي</p>
+                            <div class="flex space-x-4 space-x-reverse">
+                                <button class="flex-1 primary-btn text-white py-3 rounded-xl font-semibold">
+                                    <i class="fas fa-heart ml-2"></i>
+                                    إعجاب
+                                </button>
+                                <button class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-400 transition-colors">
+                                    <i class="fas fa-times ml-2"></i>
+                                    تمرير
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="messages" class="tab-content hidden">
+            <div class="max-w-2xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-200 mb-6 text-center">
+                    <i class="fas fa-comments text-red-800 ml-2"></i>
+                    الرسائل
+                </h2>
+                
+                <div class="card-bg rounded-xl shadow-xl overflow-hidden">
+                    <div class="divide-y divide-gray-600">
+                        <div class="p-4 hover:bg-gray-700 transition-colors cursor-pointer">
+                            <div class="flex items-center space-x-4 space-x-reverse">
+                                <div class="w-12 h-12 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <h4 class="font-semibold text-gray-200">أسماء محمد</h4>
+                                        <span class="text-sm text-gray-400">منذ 5 دقائق</span>
+                                    </div>
+                                    <p class="text-gray-400 text-sm">السلام عليكم، كيف حالك؟</p>
+                                </div>
+                                <div class="bg-red-800 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+                                    2
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 hover:bg-gray-700 transition-colors cursor-pointer">
+                            <div class="flex items-center space-x-4 space-x-reverse">
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <h4 class="font-semibold text-gray-200">خالد أحمد</h4>
+                                        <span class="text-sm text-gray-400">منذ ساعة</span>
+                                    </div>
+                                    <p class="text-gray-400 text-sm">شكراً لك على الرد، أتطلع للتحدث معك أكثر</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 hover:bg-gray-700 transition-colors cursor-pointer">
+                            <div class="flex items-center space-x-4 space-x-reverse">
+                                <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-400 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <h4 class="font-semibold text-gray-200">مريم عثمان</h4>
+                                        <span class="text-sm text-gray-400">أمس</span>
+                                    </div>
+                                    <p class="text-gray-400 text-sm">أهلاً وسهلاً، سعيدة بالتعرف عليك</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 card-bg rounded-xl shadow-xl p-4">
+                    <div class="h-64 overflow-y-auto mb-4 space-y-3">
+                        <div class="flex justify-end">
+                            <div class="bg-red-800 text-white rounded-lg p-3 max-w-xs">
+                                السلام عليكم ورحمة الله وبركاته
+                            </div>
+                        </div>
+                        <div class="flex justify-start">
+                            <div class="message-bubble text-gray-200 rounded-lg p-3 max-w-xs">
+                                وعليكم السلام ورحمة الله وبركاته، أهلاً وسهلاً
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <div class="bg-red-800 text-white rounded-lg p-3 max-w-xs">
+                                كيف حالك؟ أتمنى أن تكوني بخير
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <input type="text" placeholder="اكتب رسالتك هنا..." class="flex-1 p-3 rounded-lg border border-gray-600 bg-gray-700 text-gray-200">
+                        <button class="primary-btn text-white px-6 py-3 rounded-lg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="profile" class="tab-content hidden">
+            <div class="max-w-2xl mx-auto">
+                <div class="card-bg rounded-xl shadow-xl overflow-hidden">
+                    <div class="h-32 bg-gradient-to-r from-red-800 to-purple-800 relative">
+                        <div class="absolute -bottom-16 right-6">
+                            <div class="w-32 h-32 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full border-4 border-gray-800 flex items-center justify-center">
+                                <i class="fas fa-user text-white text-4xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-20 p-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h2 class="text-2xl font-bold text-gray-200">أحمد محمد علي</h2>
+                                <p class="text-gray-400">27 سنة - الخرطوم</p>
+                            </div>
+                            <button class="primary-btn text-white px-4 py-2 rounded-lg">
+                                <i class="fas fa-edit ml-2"></i>
+                                تعديل
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-red-800">15</div>
+                                <div class="text-sm text-gray-400">إعجاب</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-red-800">8</div>
+                                <div class="text-sm text-gray-400">توافق</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-red-800">3</div>
+                                <div class="text-sm text-gray-400">محادثة</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-graduation-cap text-red-800 ml-3 w-5"></i>
+                                <span>بكالوريوس هندسة مدنية</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-briefcase text-red-800 ml-3 w-5"></i>
+                                <span>مهندس مدني في شركة البناء الحديث</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-map-marker-alt text-red-800 ml-3 w-5"></i>
+                                <span>الخرطوم، السودان</span>
+                            </div>
+                            <div class="flex items-center text-gray-300">
+                                <i class="fas fa-heart text-red-800 ml-3 w-5"></i>
+                                <span>أبحث عن شريكة حياة</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-gray-600">
+                            <h3 class="text-lg font-semibold text-gray-200 mb-3">نبذة عني</h3>
+                            <p class="text-gray-300 leading-relaxed">
+                                شخص متدين وملتزم، أحب القراءة والرياضة. أسعى لبناء أسرة سعيدة مبنية على التفاهم والاحترام المتبادل. أؤمن بأهمية التواصل الفعال والصدق في العلاقات.
+                            </p>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-gray-600">
+                            <h3 class="text-lg font-semibold text-gray-200 mb-3">ما أبحث عنه</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-red-800 text-white px-3 py-1 rounded-full text-sm">متدينة</span>
+                                <span class="bg-red-800 text-white px-3 py-1 rounded-full text-sm">25-35 سنة</span>
+                                <span class="bg-red-800 text-white px-3 py-1 rounded-full text-sm">جامعية</span>
+                                <span class="bg-red-800 text-white px-3 py-1 rounded-full text-sm">من السودان</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 card-bg border-t border-gray-600 p-4 md:hidden">
+        <div class="flex justify-around">
+            <button onclick="showTab('discover')" class="flex flex-col items-center text-gray-400 hover:text-red-800">
+                <i class="fas fa-search text-xl mb-1"></i>
+                <span class="text-xs">اكتشاف</span>
+            </button>
+            <button onclick="showTab('matches')" class="flex flex-col items-center text-gray-400 hover:text-red-800">
+                <i class="fas fa-heart text-xl mb-1"></i>
+                <span class="text-xs">التوافقات</span>
+            </button>
+            <button onclick="showTab('messages')" class="flex flex-col items-center text-gray-400 hover:text-red-800">
+                <i class="fas fa-comments text-xl mb-1"></i>
+                <span class="text-xs">الرسائل</span>
+            </button>
+            <button onclick="showTab('profile')" class="flex flex-col items-center text-gray-400 hover:text-red-800">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">الملف</span>
+            </button>
+            <a href="pricing.html" class="flex flex-col items-center text-gray-400 hover:text-red-800">
+                <i class="fas fa-dollar-sign text-xl mb-1"></i>
+                <span class="text-xs">خطط</span>
+            </a>
+            <a href="contact.html" class="flex flex-col items-center text-gray-400 hover:text-red-800">
+                <i class="fas fa-headset text-xl mb-1"></i>
+                <span class="text-xs">تواصل</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.add('hidden'));
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('[id$="-tab"]');
+            tabButtons.forEach(button => {
+                button.classList.remove('active-tab');
+                button.classList.add('text-gray-300', 'hover:text-red-800');
+                button.classList.remove('text-white');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.remove('hidden');
+            
+            // Add active class to selected tab button
+            const activeButton = document.getElementById(tabName + '-tab');
+            activeButton.classList.add('active-tab');
+            activeButton.classList.remove('text-gray-300', 'hover:text-red-800');
+            activeButton.classList.add('text-white');
+        }
+
+        // Initialize with discover tab
+        document.addEventListener('DOMContentLoaded', function() {
+            showTab('discover');
+        });
+
+        // Add some interactive features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate real-time messaging
+            const messageInput = document.querySelector('input[placeholder="اكتب رسالتك هنا..."]');
+            const sendButton = document.querySelector('.fa-paper-plane').parentElement;
+            
+            if (sendButton) {
+                sendButton.addEventListener('click', function() {
+                    if (messageInput.value.trim()) {
+                        // Add message to chat (simulation)
+                        const chatContainer = document.querySelector('.h-64.overflow-y-auto');
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'flex justify-end';
+                        messageDiv.innerHTML = `
+                            <div class="bg-red-800 text-white rounded-lg p-3 max-w-xs">
+                                ${messageInput.value}
+                            </div>
+                        `;
+                        chatContainer.appendChild(messageDiv);
+                        messageInput.value = '';
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }
+                });
+            }
+
+            // Like/Skip functionality
+            const likeButtons = document.querySelectorAll('button:has(.fa-heart)');
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Add animation effect
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                    
+                    // Show success message (simulation)
+                    const notification = document.createElement('div');
+                    notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+                    notification.textContent = 'تم الإعجاب بنجاح!';
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 3000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
