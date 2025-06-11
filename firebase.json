@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "public": "SutrahApp",
+    "ignore": [
+      "firebase.json",
+      "/.*",
+      "/node_modules/"
+    ]
+  }
+}
+
+
